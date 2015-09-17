@@ -42,7 +42,7 @@ public class BrowserModel {
             myCurrentIndex++;
             return myHistory.get(myCurrentIndex);
         }
-        return null;
+        throw new BrowserException("THERE'S NO FUTURE");
     }
 
     /**
@@ -53,7 +53,7 @@ public class BrowserModel {
             myCurrentIndex--;
             return myHistory.get(myCurrentIndex);
         }
-        return null;
+        throw new BrowserException("CAN'T GO BACK");
     }
 
     /**
@@ -119,7 +119,7 @@ public class BrowserModel {
         if (name != null && !name.equals("") && myFavorites.containsKey(name)) {
             return myFavorites.get(name);
         }
-        return null;
+        throw new BrowserException("bad favorite");
     }
 
     // deal with a potentially incomplete URL
@@ -137,7 +137,7 @@ public class BrowserModel {
                     // e.g., let user leave off initial protocol
                     return new URL(PROTOCOL_PREFIX + possible);
                 } catch (MalformedURLException eee) {
-                    return null;
+                    throw new BrowserException(String.format("bad url: %s", possible));
                 }
             }
         }

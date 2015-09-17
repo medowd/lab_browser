@@ -98,13 +98,12 @@ public class BrowserView {
     /**
      * Display given URL.
      */
-    public void showPage (String url) {
-        URL valid = myModel.go(url);
-        if (url != null) {
-            update(valid);
-        }
-        else {
-            showError("Could not load " + url);
+    public void showPage (String url) {      
+        try {
+        	URL valid = myModel.go(url);
+        	update(valid);
+        } catch (BrowserException e) {
+        	showError(e.getMessage());
         }
     }
 
@@ -167,8 +166,17 @@ public class BrowserView {
         Optional<String> response = input.showAndWait();
         // did user make a choice?
         if (response.isPresent()) {
-            myModel.addFavorite(response.get());
-            myFavorites.getItems().add(response.get());
+        	if (response.get().equals("exception")) {
+        		try {
+					throw new BrowserException("AHHH");
+				} catch (BrowserException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+        	} else {
+        		myModel.addFavorite(response.get());
+                myFavorites.getItems().add(response.get());
+        	}
         }
     }
 
