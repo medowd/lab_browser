@@ -76,6 +76,8 @@ public class BrowserView {
         // use resources for labels
         myResources = ResourceBundle.getBundle(DEFAULT_RESOURCE_PACKAGE + language);
         BorderPane root = new BorderPane();
+        // initialize favorites combo box
+        initFavoritesBox();
         // must be first since other panels may refer to page
         root.setCenter(makePageDisplay());
         root.setTop(makeInputPanel());
@@ -85,6 +87,12 @@ public class BrowserView {
         // create scene to hold UI
         myScene = new Scene(root, DEFAULT_SIZE.width, DEFAULT_SIZE.height);
         //myScene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+    }
+    
+    private void initFavoritesBox() {
+    	myFavorites = new ComboBox<String>();
+    	myFavorites.setPromptText(myResources.getString("FavoriteFirstItem"));
+    	myFavorites.setOnAction(e -> showFavorite(myFavorites.getValue()));
     }
 
     /**
@@ -225,6 +233,8 @@ public class BrowserView {
             myModel.setHome();
             enableButtons();
         }));
+        result.getChildren().add(makeButton("AddFavoriteCommand", event -> addFavorite()));
+        result.getChildren().add(myFavorites);
         return result;
     }
 
