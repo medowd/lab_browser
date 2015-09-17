@@ -47,7 +47,7 @@ public class BrowserView {
     // constants
     public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
     public static final String DEFAULT_RESOURCE_PACKAGE = "resources/";
-    public static final String STYLESHEET = "default.css";
+    public static final String STYLESHEET = "customstyle.css";
     public static final String BLANK = " ";
 
     // scene, needed to report back to Application
@@ -86,7 +86,7 @@ public class BrowserView {
         enableButtons();
         // create scene to hold UI
         myScene = new Scene(root, DEFAULT_SIZE.width, DEFAULT_SIZE.height);
-        //myScene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
+        myScene.getStylesheets().add(DEFAULT_RESOURCE_PACKAGE + STYLESHEET);
     }
     
     private void initFavoritesBox() {
